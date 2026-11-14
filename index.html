@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<!-- 加入嚴格的 CSP：禁止任何外部連線與表單提交，確保資料完全留在本機 -->
+<!-- 只限制外部連線與表單提交，避免頁面額外傳送裝置資訊；網站主機仍可能收到一般網頁請求與瀏覽器資訊 -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; form-action 'none'; base-uri 'none';">
 <title>PC Spec Check</title>
 <style>
@@ -46,7 +46,6 @@ button.btn-link:hover{color:var(--text);border-color:var(--a)}
         <div class="sub">自動電腦規格與效能概覽</div>
       </div>
     </div>
-    <!-- 移除行內 onclick，改用 JS 事件監聽 -->
     <button class="btn-primary" id="btn-recheck" type="button">重新檢查</button>
   </header>
 
@@ -93,7 +92,6 @@ button.btn-link:hover{color:var(--text);border-color:var(--a)}
     <article class="card">
       <div class="label">🪟 系統</div>
       <div class="value" id="os">—</div>
-      <!-- 預設隱藏完整 User-Agent 以保護截圖隱私 -->
       <div>
         <button class="btn-link" id="btn-toggle-ua" type="button">顯示詳細瀏覽器資訊</button>
         <div class="muted hidden" id="browser" style="margin-top:6px;word-break:break-all;">—</div>
@@ -103,14 +101,14 @@ button.btn-link:hover{color:var(--text);border-color:var(--a)}
     <article class="card score">
       <div class="circle" id="ring"><b id="score">—</b></div>
       <div>
-        <div class="label">📊 效能估計</div>
+        <div class="label">📊 瀏覽器資訊評估</div>
         <div class="value" id="grade">等待檢查</div>
-        <div class="muted">此分數依瀏覽器可取得的 CPU/RAM/WebGL 資訊估算，不是正式硬體跑分。</div>
+        <div class="muted">此分數僅依據瀏覽器可提供的 CPU/RAM/WebGL 資訊做簡單評估，不代表正式硬體效能。</div>
       </div>
     </article>
   </section>
 
-  <div class="note"><b>瀏覽器限制：</b>一般網站無法直接取得完整 CPU/GPU 型號、硬碟容量、硬體溫度與即時 RAM 使用量。若要完整 Windows 硬體檢測，需要本機程式配合。</div>
+  <div class="note"><b>說明：</b>本頁只能讀取瀏覽器對外公開的有限資訊，例如邏輯核心數、RAM 估算、WebGL 渲染器等；這些數值可能因瀏覽器、裝置和隱私設定而不同。分數只代表「資訊可用度」與粗略參考，不是正式硬體跑分。頁面本身不會主動傳送到外部服務，但網站主機仍可能收到一般訪問資訊。</div>
 </main>
 
 <script>
@@ -123,11 +121,10 @@ function gpu() {
     if (!g) return '無法取得';
     const e = g.getExtension('WEBGL_debug_renderer_info');
     const renderer = e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : '瀏覽器未公開型號';
-    
-    // 主動釋放 WebGL Context，避免多次點擊重新檢查導致資源耗盡
+
     const lose = g.getExtension('WEBGL_lose_context');
     if (lose) lose.loseContext();
-    
+
     return renderer;
   } catch (err) {
     return '無法取得';
@@ -148,7 +145,7 @@ function check() {
   const c = navigator.hardwareConcurrency || 0;
   const m = navigator.deviceMemory || 0;
   const g = gpu();
-  
+
   let s = 35 + Math.min(30, c * 3) + Math.min(25, m * 3) + (g !== '無法取得' && g !== '瀏覽器未公開型號' ? 10 : 0);
   s = Math.min(100, s);
 
@@ -169,13 +166,12 @@ function check() {
 
   $('score').textContent = s;
   $('ring').style.background = 'conic-gradient(var(--a) ' + (s * 3.6) + 'deg,#26334d 0deg)';
-  $('grade').textContent = s >= 80 ? '可用資源較高' : s >= 60 ? '可用資源中等' : '可用資訊較少';
+  $('grade').textContent = s >= 80 ? '資訊可用度較高' : s >= 60 ? '資訊可用度中等' : '資訊可用度較少';
 
-  $('status').textContent = '● 檢查完成（部分資訊受瀏覽器限制）';
+  $('status').textContent = '● 檢查完成（資訊受瀏覽器限制，僅供參考）';
   $('time').textContent = new Date().toLocaleString('zh-TW');
 }
 
-// 綁定按鈕事件
 $('btn-recheck').addEventListener('click', check);
 $('btn-toggle-ua').addEventListener('click', function() {
   const el = $('browser');
@@ -183,7 +179,6 @@ $('btn-toggle-ua').addEventListener('click', function() {
   this.textContent = isHidden ? '顯示詳細瀏覽器資訊' : '隱藏詳細瀏覽器資訊';
 });
 
-// 初始執行
 check();
 </script>
 </body>
