@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PC Spec Check</title>
+<style>
+:root{--bg:#0b1020;--card:#141c30;--card2:#1b2740;--text:#eef3ff;--muted:#9aa9c4;--a:#65d6ff;--line:#293752}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#17294a,#0b1020 60%);color:var(--text);font-family:system-ui,"Noto Sans TC",sans-serif}
+.wrap{max-width:1050px;margin:auto;padding:28px 18px 50px}.top{display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center}.logo{width:45px;height:45px;border-radius:14px;background:linear-gradient(135deg,var(--a),#9c7cff);display:grid;place-items:center;color:#07101e;font-weight:900}
+h1{margin:0;font-size:30px}.sub,.muted{color:var(--muted);font-size:13px}.hero,.card{background:linear-gradient(120deg,var(--card),var(--card2));border:1px solid var(--line);border-radius:18px}
+.hero{margin:25px 0 15px;padding:21px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.hero h2{margin:0 0 6px}.status{color:#43d19e;font-size:13px;margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.card{padding:18px}.label{color:var(--muted);font-size:13px}.value{font-size:20px;font-weight:750;margin:12px 0 5px;overflow-wrap:anywhere}
+.score{grid-column:1/-1;display:flex;align-items:center;gap:22px}.circle{width:105px;height:105px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--a) 0deg,#26334d 0deg);position:relative}.circle:after{content:"";position:absolute;inset:8px;background:var(--card);border-radius:50%}.circle b{position:relative;font-size:28px;z-index:1}
+button{background:var(--a);color:#07101e;border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}.note{margin-top:15px;padding:14px;border-left:3px solid var(--a);background:var(--card);border-radius:8px;color:var(--muted);font-size:12px;line-height:1.6}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.score{grid-column:auto}}
+</style></head>
+<body><main class="wrap">
+<header class="top"><div class="brand"><div class="logo">PC</div><div><h1>PC Spec Check</h1><div class="sub">自動電腦規格與效能概覽</div></div></div><button onclick="check()">重新檢查</button></header>
+<section class="hero"><div><h2>電腦規格檢查</h2><div class="muted">讀取瀏覽器允許提供的裝置資訊。</div><div class="status" id="status">● 檢查中…</div></div><div class="muted" id="time">—</div></section>
+<section class="grid">
+<article class="card"><div class="label">🧠 CPU</div><div class="value" id="cpu">—</div><div class="muted">邏輯處理器數量；瀏覽器通常不公開完整 CPU 型號。</div></article>
+<article class="card"><div class="label">🎮 GPU</div><div class="value" id="gpu">—</div><div class="muted">透過 WebGL 嘗試取得顯示卡資訊。</div></article>
+<article class="card"><div class="label">💾 RAM</div><div class="value" id="ram">—</div><div class="muted">瀏覽器提供的裝置記憶體估計值。</div></article>
+<article class="card"><div class="label">🌐 網路</div><div class="value" id="net">—</div><div class="muted" id="net2">—</div></article>
+<article class="card"><div class="label">🖥️ 螢幕</div><div class="value" id="screen">—</div><div class="muted" id="screen2">—</div></article>
+<article class="card"><div class="label">🪟 系統</div><div class="value" id="os">—</div><div class="muted" id="browser">—</div></article>
+<article class="card score"><div class="circle" id="ring"><b id="score">—</b></div><div><div class="label">📊 效能估計</div><div class="value" id="grade">等待檢查</div><div class="muted">此分數依瀏覽器可取得的 CPU/RAM/WebGL 資訊估算，不是正式硬體跑分。</div></div></article>
+</section>
+<div class="note"><b>瀏覽器限制：</b>一般網站無法直接取得完整 CPU/GPU 型號、硬碟容量、硬體溫度與即時 RAM 使用量。若要完整 Windows 硬體檢測，需要本機程式配合。</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+function gpu(){try{let c=document.createElement('canvas'),g=c.getContext('webgl');if(!g)return'無法取得';let e=g.getExtension('WEBGL_debug_renderer_info');return e?g.getParameter(e.UNMASKED_RENDERER_WEBGL):'瀏覽器未公開型號'}catch(e){return'無法取得'}}
+function os(){let u=navigator.userAgent;if(/Windows/.test(u))return'Windows';if(/Mac OS X/.test(u))return'macOS';if(/Android/.test(u))return'Android';if(/iPhone|iPad/.test(u))return'iOS / iPadOS';if(/Linux/.test(u))return'Linux';return'未知'}
+function check(){let c=navigator.hardwareConcurrency||0,m=navigator.deviceMemory||0,g=gpu(),s=35+Math.min(30,c*3)+Math.min(25,m*3)+(g!=='無法取得'&&g!=='瀏覽器未公開型號'?10:0);s=Math.min(100,s);
+$('cpu').textContent=c?c+' 個邏輯處理器':'未提供';$('gpu').textContent=g;$('ram').textContent=m?'約 '+m+' GB（估計）':'未提供';$('net').textContent=navigator.onLine?'已連線':'離線';
+let n=navigator.connection;$('net2').textContent=n?'類型：'+(n.effectiveType||'未知')+'；估計 '+(n.downlink??'未知')+' Mbps':'瀏覽器未提供詳細網路資訊';
+$('screen').textContent=screen.width+' × '+screen.height;$('screen2').textContent='像素比例：'+(devicePixelRatio||1);$('os').textContent=os();$('browser').textContent=navigator.userAgent;
+$('score').textContent=s;$('ring').style.background='conic-gradient(var(--a) '+s*3.6+'deg,#26334d 0deg)';$('grade').textContent=s>=80?'可用資源較高':s>=60?'可用資源中等':'可用資訊較少';
+$('status').textContent='● 檢查完成（部分資訊受瀏覽器限制）';$('time').textContent=new Date().toLocaleString('zh-TW')}
+check();
+</script></body></html>
