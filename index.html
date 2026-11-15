@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; form-action 'none'; base-uri 'none';">
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="dark light">
 <title>PC Spec Check</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -12,16 +12,16 @@
 <main class="wrap">
   <header class="top">
     <div class="brand"><div class="logo" aria-hidden="true">PC</div><div><h1>PC Spec Check</h1><div class="sub" data-i18n="subtitle">瀏覽器可提供的裝置資訊概覽</div></div></div>
-    <div class="actions"><button class="btn-link" id="btn-language" type="button" aria-label="Switch language">English</button><button class="btn-link" id="btn-copy" type="button" data-i18n="copyReport">複製規格報告</button><button class="btn-primary" id="btn-recheck" type="button" data-i18n="recheck">重新檢查</button></div>
+    <div class="actions"><label class="sr-only" for="theme-select" data-i18n="themeLabel">主題</label><select id="theme-select" class="theme-select" aria-describedby="theme-help"><option value="dark" data-i18n="themeDark">Dark Tech</option><option value="light" data-i18n="themeLight">White Minimal</option><option value="rgb" data-i18n="themeRgb">RGB Gaming</option></select><span id="theme-help" class="sr-only" data-i18n="themeHelp">選擇介面主題</span><button class="btn-link" id="btn-language" type="button" aria-label="Switch language">English</button><button class="btn-link" id="btn-copy" type="button" data-i18n="copyReport">複製規格報告</button><button class="btn-primary" id="btn-recheck" type="button" data-i18n="recheck">重新檢查</button></div>
   </header>
   <section class="hero" aria-labelledby="page-heading"><div><h2 id="page-heading" data-i18n="heading">電腦規格檢查</h2><div class="muted" data-i18n="intro">讀取瀏覽器允許提供的有限裝置資訊。</div><div class="status" id="status" role="status" aria-live="polite">檢查中…</div></div><div class="muted" id="time">—</div></section>
-  <section class="grid" aria-label="Device information">
+  <section class="grid" aria-labelledby="device-info-heading"><h2 id="device-info-heading" class="sr-only" data-i18n="deviceInfo">裝置資訊</h2>
     <article class="card"><div class="label">🧠 <span data-i18n="cpu">CPU</span></div><div class="value" id="cpu">—</div><div class="muted" data-i18n="cpuHelp">邏輯處理器數量；瀏覽器通常不公開完整 CPU 型號。</div></article>
     <article class="card"><div class="label">🎮 <span data-i18n="gpu">GPU</span></div><div class="value" id="gpu">—</div><div class="muted" data-i18n="gpuHelp">嘗試透過 WebGL 讀取顯示渲染器；可能受隱私設定限制。</div></article>
     <article class="card"><div class="label">💾 <span data-i18n="ram">RAM</span></div><div class="value" id="ram">—</div><div class="muted" data-i18n="ramHelp">瀏覽器提供的裝置記憶體估計值，並非即時使用量。</div></article>
     <article class="card"><div class="label">🌐 <span data-i18n="network">網路</span></div><div class="value" id="net">—</div><div class="muted" id="net2">—</div></article>
     <article class="card"><div class="label">🖥️ <span data-i18n="screen">螢幕</span></div><div class="value" id="screen">—</div><div class="muted" id="screen2">—</div></article>
-    <article class="card"><div class="label">🪟 <span data-i18n="system">系統與瀏覽器</span></div><div class="value" id="os">—</div><div class="muted" id="locale">—</div><div class="muted" id="timezone">—</div><button class="btn-link" id="btn-toggle-ua" type="button" aria-expanded="false" data-i18n="showDetails">顯示詳細瀏覽器資訊</button><div class="muted hidden" id="browser" style="margin-top:8px;word-break:break-all;"></div></article>
+    <article class="card"><div class="label">🪟 <span data-i18n="system">系統與瀏覽器</span></div><div class="value" id="os">—</div><div class="muted" id="locale">—</div><div class="muted" id="timezone">—</div><button class="btn-link" id="btn-toggle-ua" type="button" aria-expanded="false" data-i18n="showDetails">顯示詳細瀏覽器資訊</button><div class="muted hidden" id="browser" class="muted hidden browser-details"></div></article>
     <article class="card score"><div class="circle" id="ring" role="img" aria-label="0%"><b id="score">—</b></div><div class="score-info"><div class="label">📊 <span data-i18n="availability">瀏覽器資訊可用度</span></div><div class="value" id="grade">等待檢查</div><div class="scorebar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="scorebar-label"><span id="scorebar-label" class="sr-only">Score</span><span id="scorebar-fill"></span></div><div class="score-meta"><span id="scorePercent">0%</span><span data-i18n="scoreRange">資訊完整度</span></div><div class="muted" data-i18n="scoreHelp">此分數只代表可取得資訊的完整程度，不代表硬體效能或正式跑分。</div></div></article>
   </section>
   <div class="note"><b data-i18n="limitsTitle">限制與隱私：</b><span data-i18n="limits">一般瀏覽器不會公開完整 CPU/GPU 型號、硬碟容量、硬體溫度或即時 RAM 使用量。分數只是資訊可用度參考。頁面不會主動將這些裝置資訊傳送到外部服務；網站主機仍可能收到一般網頁請求資訊。</span></div>
