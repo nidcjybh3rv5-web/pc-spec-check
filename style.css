@@ -16,3 +16,19 @@ button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #fff;o
 .btn-primary{background:var(--a);color:#07101e;border:0;border-radius:10px;padding:10px 14px;font-weight:800}.btn-link{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:7px 10px;font-size:13px}.btn-link:hover{color:var(--text);border-color:var(--a)}
 .note{margin-top:15px;padding:14px;border-left:3px solid var(--a);background:var(--card);border-radius:8px;color:var(--muted);font-size:12px;line-height:1.6}.hidden{display:none}
 @media(max-width:650px){.grid{grid-template-columns:1fr}.score{grid-column:auto}.wrap{padding-top:18px}}
+
+:root{--bg-top:#17294a;--bg:#0b1020;--focus:#fff}
+body{min-height:100vh;background:radial-gradient(circle at top,var(--bg-top),var(--bg) 60%);transition:background .2s,color .2s}
+.theme-select{font:inherit;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 10px;min-height:38px}
+.theme-select:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.browser-details{margin-top:8px;word-break:break-all}
+body[data-theme="light"]{--card:#fff;--card2:#f5f7fb;--text:#172033;--muted:#5c687d;--a:#1769aa;--line:#d8deea;--bg-top:#eef5ff;--bg:#f7f9fc;--focus:#173b63}
+body[data-theme="light"] .logo{color:#fff}
+body[data-theme="light"] .scorebar{background:#e6ebf3}
+body[data-theme="light"] .circle:after{background:var(--card)}
+body[data-theme="rgb"]{--card:#111326;--card2:#1a1430;--text:#f7f3ff;--muted:#b8add0;--a:#00f5ff;--line:#46326b;--bg-top:#2b1048;--bg:#080612;--focus:#fff}
+body[data-theme="rgb"] .logo{background:linear-gradient(135deg,#00f5ff,#ff4fd8,#8b5cff)}
+body[data-theme="rgb"] .scorebar span:not(.sr-only){background:linear-gradient(90deg,#00f5ff,#ff4fd8,#8b5cff)}
+body[data-theme="rgb"] .circle{background:conic-gradient(var(--a) 0deg,#2b2442 0deg)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+@media(max-width:650px){.actions{width:100%}.actions>*{flex:1}.theme-select{min-width:0}.btn-primary,.btn-link{min-height:44px}}
