@@ -44,9 +44,9 @@ The page checks explicit iPad/iPhone User-Agent tokens and platform hints. iPadO
 
 ## Score / 分數說明
 
-The 0–100 score is the percentage of five categories available to the page: CPU count, memory estimate, GPU renderer, network information, and screen dimensions. It measures **information availability only**. It does not measure CPU/GPU speed, actual installed RAM, thermals, storage, or real-world performance, and should not be used to compare devices.
+The 0–100 score is the percentage of four categories available to the page: CPU count, memory estimate, GPU renderer, and screen dimensions. Network status/details are displayed separately and are not included in the score. It measures **information availability only**. It does not measure CPU/GPU speed, actual installed RAM, thermals, storage, or real-world performance, and should not be used to compare devices.
 
-0–100 分是五類資訊（CPU 邏輯處理器數、記憶體估值、GPU 渲染器、網路資訊、螢幕尺寸）中可讀取項目的比例。它只表示「資訊可用度」，不代表 CPU/GPU 速度、實際 RAM 容量、溫度、儲存空間或實際效能，不適合用來比較裝置。
+0–100 分是四類資訊（CPU 邏輯處理器數、記憶體估值、GPU 渲染器、螢幕尺寸）中可讀取項目的比例；網路狀態／詳細資訊會另外顯示，不納入分數。它只表示「資訊可用度」，不代表 CPU/GPU 速度、實際 RAM 容量、溫度、儲存空間或實際效能，不適合用來比較裝置。
 
 ## Privacy and security / 隱私與安全
 
