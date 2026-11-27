@@ -68,3 +68,12 @@ The 0–100 score is the percentage of four categories available to the page: CP
 ## Development / 開發
 
 This repository is intentionally dependency-free: `index.html` contains the markup, styles, and JavaScript. Review changes in a browser at desktop and mobile sizes, and test with APIs unavailable where possible. Do not treat User-Agent or browser-provided hardware hints as authoritative or use them for security decisions.
+
+
+## New tools / 新增功能
+
+- Device type detection: desktop, laptop, tablet, or phone (best effort).
+- Browser storage estimate using `navigator.storage.estimate()`; this is origin storage, not free system disk space.
+- Battery status when `navigator.getBattery()` is supported.
+- Browser capability summary for secure context, WebGL, storage estimation, and clipboard.
+- Local plain-text report download; report generation stays in the browser.

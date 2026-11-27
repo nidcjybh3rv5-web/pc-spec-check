@@ -32,3 +32,5 @@ body[data-theme="rgb"] .scorebar span:not(.sr-only){background:linear-gradient(9
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 @media(max-width:650px){.actions{width:100%}.actions>*{flex:1}.theme-select{min-width:0}.btn-primary,.btn-link{min-height:44px}}
+
+@media(max-width:650px){.actions>*{flex:1 1 140px}}
